@@ -6,7 +6,7 @@ conn = sqlite3.connect('brawlstars_stats.db')
 cursor = conn.cursor()
 
 # Set the cutoff date for cleaning up old entries
-cutoff_date = '2024-02-01'
+cutoff_date = '2024-03-29'
 
 # Remove old entries from the players table
 cursor.execute('DELETE FROM players WHERE date(timestamp) <= ?', (cutoff_date,))

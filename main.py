@@ -75,14 +75,22 @@ def fetch_and_store_battle_logs(api_key, player_tag, cursor):
         result = battle['battle'].get('result', 'Unknown')
         soloshodown = False
 
-        if event_mode in ['soloShowdown', 'duoShowdown'] and 'rank' in battle['battle']:
+        if event_mode in ['soloShowdown', 'duoShowdown', 'wipeout'] and 'rank' in battle['battle']:
             rank = battle['battle']['rank']
-            if rank <=4:
-                result = 'victory'
-            elif rank == 5:
-                result = 'draw'
+            if event_mode == 'soloShowdown' or event_mode == 'wipeout':
+                if rank <=4:
+                    result = 'victory'
+                elif rank == 5:
+                    result = 'draw'
+                else:
+                    result = 'defeat'
             else:
-                result = 'defeat'
+                if rank <=2:
+                    result = 'victory'
+                elif rank == 3:
+                    result = 'draw'
+                else:
+                    result = 'defeat'
             if event_mode == 'soloShowdown':
                 soloshodown = True
 
@@ -131,7 +139,7 @@ def find_brawler_in_battle_log(battle, player_tag, soloshodown=False):
 api_key = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6ImJiNGY0ODdhLTIzZWMtNGE4Ny1iNTJiLWE4MzczYjA3ZmE0YyIsImlhdCI6MTcwNDkwNTUyMywic3ViIjoiZGV2ZWxvcGVyL2U0M2UwMjRhLTBjNzQtYWMyOS03NjI3LTZiNGVjN2NmYTc4NSIsInNjb3BlcyI6WyJicmF3bHN0YXJzIl0sImxpbWl0cyI6W3sidGllciI6ImRldmVsb3Blci9zaWx2ZXIiLCJ0eXBlIjoidGhyb3R0bGluZyJ9LHsiY2lkcnMiOlsiODYuNzQuMjAwLjEyNiIsIjg3LjEyOS4xNjYuMTg2IiwiMTYyLjI0My4xODQuMjEiLCI2NS4xLjExNi4xNDgiLCIxNjIuMjQ4LjIyNC4xMDMiXSwidHlwZSI6ImNsaWVudCJ9XX0.QDbw3T_G8yFG6wn6IncAcPaW8NTNyht5c9nJ31ryQGRDUPI-rGhr2XxS_hXUwXYNX0_f-eFWDNvNMbL4_hlDTA'
 
 # List of player tags
-player_tags = ['YGVJ0VV', 'L8V9LRVV', 'PLUJGG8R2', 'Q8U0GJVG2', '2RQ9R90G9', '8P29PQQR2', '9000JU9V', 'RY0JYYJP9', 'YJ9G2RPUL', '2ULL2VUUQ']
+player_tags = ['YGVJ0VV', 'L8V9LRVV', 'PLUJGG8R2', 'Q8U0GJVG2', '2RQ9R90G9', '8P29PQQR2', '9000JU9V', 'RY0JYYJP9', "RPRLOCURY", "RQ8VC9QRP", "992YU929J", "2QQGOYJJ8", "2PPLYRCJR", "RLYVJ9CPU", "GC9GQJGR"]
 
 # Update data for each player
 for tag in player_tags:
